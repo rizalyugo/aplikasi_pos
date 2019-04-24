@@ -1,1 +1,1 @@
-# aplikasi_pos
+# Aplikasi POINT OF SALES (POS)
