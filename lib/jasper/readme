@@ -1,0 +1,9 @@
+
+JasperReports Library 5.6.0 Change Log
+=============================================
+
+- new overflowType attribute available for subreport elements to control subreport runtime 
+stretch behavior;
+
+- minor bug fixes and improvements;
+

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapPenjualan" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3572bf8c-2bcb-407a-81d5-9a21b9e0ea44">
+	<property name="ireport.zoom" value="1.2396694214876032"/>
+	<property name="ireport.x" value="267"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="subjudul" class="java.lang.String"/>
+	<parameter name="dtglAwal" class="java.lang.String"/>
+	<parameter name="dtglAkhir" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\conftoko\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamat" class="java.lang.String"/>
+	<parameter name="telp" class="java.lang.String"/>
+	<parameter name="instansi" class="java.lang.String"/>
+	<parameter name="kat" class="java.lang.String"/>
+	<parameter name="totAkhir" class="java.lang.Double"/>
+	<parameter name="totCash" class="java.lang.Double"/>
+	<parameter name="totTransfer" class="java.lang.Double"/>
+	<parameter name="totHpp" class="java.lang.Double"/>
+	<queryString>
+		<![CDATA[SELECT p.no_faktur, p.tanggal, p.nama_member, p.total, p.diskon as dakhir, p.petugas, p.total_akhir as totAkhir, IF(p.jenis_pemb='CASH',p.total_akhir,0) AS cash, IF(p.jenis_pemb='TRANSFER',p.total_akhir,0) AS transfer FROM tb_penjualan p JOIN tb_penjualan_detail pd ON p.no_faktur=pd.no_faktur WHERE p.status='1'  AND pd.kategori LIKE $P{kat}  AND date(p.tanggal) BETWEEN $P{dtglAwal} AND $P{dtglAkhir} GROUP BY p.no_faktur]]>
+	</queryString>
+	<field name="no_faktur" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_member" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dakhir" class="java.lang.Double"/>
+	<field name="petugas" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totAkhir" class="java.lang.Double"/>
+	<field name="cash" class="java.lang.Double"/>
+	<field name="transfer" class="java.lang.Double"/>
+	<variable name="no_faktur_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{no_faktur}]]></variableExpression>
+	</variable>
+	<variable name="totAkhir_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{totAkhir}]]></variableExpression>
+	</variable>
+	<variable name="cash_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{cash}]]></variableExpression>
+	</variable>
+	<variable name="transfer_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{transfer}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="20" uuid="6c5a5810-ce60-48a2-89a5-81ce0f02c3ec"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PENJUALAN BARANG]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="71" width="802" height="20" uuid="58e5e302-d81d-4761-b21e-e155180bb17e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{subjudul}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="35" width="802" height="15" uuid="252098c2-9387-4275-b848-49703ac4a2b0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{alamat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="51" width="802" height="15" uuid="111272c2-4cb7-43b1-b33b-e1b016e40f7c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{telp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="802" height="15" uuid="899c2f54-b808-4f36-be0b-669854e8a107"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{instansi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<subreport>
+				<reportElement x="1" y="0" width="801" height="25" uuid="1ffc28a1-258d-4c40-a948-e2ff83593b2b"/>
+				<subreportParameter name="kat">
+					<subreportParameterExpression><![CDATA[$P{kat}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="noFaktur">
+					<subreportParameterExpression><![CDATA[$F{no_faktur}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tglAwal">
+					<subreportParameterExpression><![CDATA[$P{dtglAwal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tglAkhir">
+					<subreportParameterExpression><![CDATA[$P{dtglAkhir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "LapPenjualanSub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="134" splitType="Stretch">
+			<textField>
+				<reportElement x="690" y="10" width="81" height="20" uuid="02032c47-d2d6-4348-b0bb-c6aaf462d460"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{no_faktur_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="690" y="70" width="81" height="20" uuid="31b66dcf-d850-4c92-96e9-6cc2e5da847b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totAkhir}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="537" y="10" width="140" height="20" uuid="502fe6cb-80cd-4171-8e61-efdfa5d6e37d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Transaksi ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="537" y="30" width="140" height="20" uuid="b006fb30-5e6e-4c51-b8e6-a666dc11741e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Cash]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="677" y="10" width="13" height="20" uuid="f085aef2-9970-4459-b8e0-b7ff413d12ca"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="677" y="30" width="13" height="20" uuid="c82f6b13-b31d-4234-94e8-6f1a439a1caa"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="690" y="30" width="81" height="20" uuid="7a11da9e-c302-4e7e-95da-6eb611b1ad19"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totCash}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="690" y="50" width="81" height="20" uuid="feb30069-6426-415c-a001-75c46bf536f0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totTransfer}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="677" y="50" width="13" height="20" uuid="43bd8c07-77f2-4a6f-921f-e4b6df77e602"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="537" y="50" width="140" height="20" uuid="4d24598b-2b71-4855-b51e-b970c112fa34"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Transfer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="677" y="70" width="13" height="20" uuid="2477063f-d5c1-471b-905a-528a66807b4f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="537" y="70" width="140" height="20" uuid="4ee6b4bb-49f3-4ad6-95af-ac87f4a535cf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Akhir Penjualan ]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="690" y="90" width="81" height="20" uuid="03dedd9c-4a5c-4878-8b8e-c41321adfe21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totHpp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="537" y="90" width="140" height="20" uuid="9b7d0525-4a4a-40fc-8d22-2043f067dfd1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total HPP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="537" y="110" width="140" height="20" uuid="22112b7c-d0df-4508-9e9c-5550c854f813"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pendapatan Bersih ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="677" y="90" width="13" height="20" uuid="5e184e7b-1e9a-419d-aa10-fdfdce43cb55"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="677" y="110" width="13" height="20" uuid="1934ef93-cbf2-4b95-bb3d-07ef8d1b31bc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="690" y="110" width="81" height="20" uuid="18dbdad1-35ad-4ac3-bbd5-7eda5a24c326"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totAkhir}-$P{totHpp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

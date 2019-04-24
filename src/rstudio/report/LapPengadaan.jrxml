@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapPengadaan" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3572bf8c-2bcb-407a-81d5-9a21b9e0ea44">
+	<property name="ireport.zoom" value="1.5000000000000102"/>
+	<property name="ireport.x" value="208"/>
+	<property name="ireport.y" value="17"/>
+	<parameter name="subjudul" class="java.lang.String"/>
+	<parameter name="dtglAwal" class="java.lang.String"/>
+	<parameter name="dtglAkhir" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\conftoko\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamat" class="java.lang.String"/>
+	<parameter name="telp" class="java.lang.String"/>
+	<parameter name="instansi" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM tb_pembelian WHERE status='1' AND tgl_nota BETWEEN $P{dtglAwal} AND $P{dtglAkhir}]]>
+	</queryString>
+	<field name="no_faktur" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_nota" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_supplier" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jatuh_tempo" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="faktur_terusan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="no_faktur_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{no_faktur}]]></variableExpression>
+	</variable>
+	<variable name="total_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="6c5a5810-ce60-48a2-89a5-81ce0f02c3ec"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PENGADAAN BARANG]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="71" width="555" height="20" uuid="58e5e302-d81d-4761-b21e-e155180bb17e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{subjudul}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="35" width="555" height="15" uuid="252098c2-9387-4275-b848-49703ac4a2b0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{alamat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="51" width="555" height="15" uuid="111272c2-4cb7-43b1-b33b-e1b016e40f7c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{telp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="555" height="15" uuid="899c2f54-b808-4f36-be0b-669854e8a107"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{instansi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<subreport>
+				<reportElement x="1" y="0" width="554" height="25" uuid="1ffc28a1-258d-4c40-a948-e2ff83593b2b"/>
+				<subreportParameter name="noFaktur">
+					<subreportParameterExpression><![CDATA[$F{no_faktur}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tglAwal">
+					<subreportParameterExpression><![CDATA[$P{dtglAwal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tglAkhir">
+					<subreportParameterExpression><![CDATA[$P{dtglAkhir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "LapPengadaanSub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="56" splitType="Stretch">
+			<textField>
+				<reportElement x="478" y="11" width="75" height="20" uuid="02032c47-d2d6-4348-b0bb-c6aaf462d460"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{no_faktur_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="325" y="11" width="140" height="20" uuid="502fe6cb-80cd-4171-8e61-efdfa5d6e37d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Transaksi ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="31" width="140" height="20" uuid="b006fb30-5e6e-4c51-b8e6-a666dc11741e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Akhir Penjualan ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="11" width="13" height="20" uuid="f085aef2-9970-4459-b8e0-b7ff413d12ca"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="31" width="13" height="20" uuid="c82f6b13-b31d-4234-94e8-6f1a439a1caa"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="478" y="31" width="75" height="20" uuid="b1e4fe75-3dc9-4959-ac65-ff64048bf143"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
